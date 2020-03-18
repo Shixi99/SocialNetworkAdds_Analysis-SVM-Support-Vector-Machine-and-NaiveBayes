@@ -95,7 +95,7 @@ model <- svm(formula = Purchased~.,
              data    = train_set,
              type    = 'C-classification',
              probability = T,
-             kernel  = 'linear'
+             kernel  = 'linear' #'linear','sigmoid','polynomial'
   )
 # predicting test results for SVM
 predd <- model %>% predict(test_set %>% select(-Purchased), probability = TRUE)
@@ -157,7 +157,7 @@ pred_object <- prediction(pp$`1`,train_set$Purchased)
 AUC <- pred_object %>% performance('auc')
 AUC_train <- AUC %>% slot("y.values") %>% .[[1]] %>% round(2)
 
-tibble(AUC_train, AUC_test)
+tibble(auc_train=paste0(AUC_train*100,"%") , auc_test=paste0(AUC_test*100,"%"))
 
 
 
